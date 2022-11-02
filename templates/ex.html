@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">         -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with Chart JS with www.chartjs3.com</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(255, 26, 104, 1);
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(255, 26, 104, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 700px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(255, 26, 104, 1);
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chartMenu">
+      <p>WWW.CHARTJS3.COM (Chart JS 3.9.1)</p>
+    </div>
+    <div class="chartCard">
+      <div class="chartBox">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="text/javascript" src="https://unpkg.com/chartjs-chart-geo@3.5.2/build/index.umd.min.js"></script>
+
+    <script>
+    const url = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
+    // topojson = lines or arc lines combined = a country
+    // geojson = fixed shape of country
+
+    fetch(url)
+        .then((result) => result.json()
+        .then((datapoint) => { // parsing json to js
+        const countries = ChartGeo.topojson.feature(datapoint, datapoint.objects.countries).features;
+         
+        // console.log(countries[0].properties.name);
+        // console.log(countries[0][properties][name]);
+        // console.log(countries)
+
+        // setup 
+        const data = {
+        labels: countries.map(country => country.properties.name),
+        datasets: [{
+            label: 'Countries',
+            data: countries.map(country => (
+                    {
+                        feature: country, 
+                        value: myfunction(3,2,1)
+                    }
+                )),
+            }]
+        };
+        console.log(data);
+
+        // config 
+        const config = {
+            type: 'choropleth',
+            data,
+            options: {
+                showOutline: true, // this is to show OUTLINE of world map
+                scales: {
+                    xy: {
+                        projection: 'equalEarth'
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        // render init block
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    }))
+ 
+    function myfunction(inta, intb, intc){
+        return intb;
+    }
+   
+    </script>
+
+  </body>
+</html>
