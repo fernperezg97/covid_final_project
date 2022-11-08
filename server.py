@@ -1,6 +1,6 @@
 """Server for COVID-19 Final Project"""
 
-from flask import (Flask, render_template, request, flash, session, redirect)
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 import json
 import requests
 import crud
@@ -42,15 +42,32 @@ def homepage():
 def covid_timeline():
     """View timeline from case 1 to present."""
 
+    # total = crud.get_total_num_dates()
+    # print(total)
+
     return render_template("timeline.html")
 
-# country = crud.create_country("United States", "USA", "US")
-# model.db.session.add(country)
+@app.route("/api/get-list-days")
+def get_list_of_days():
+    """Return dictionary containing total number of unique days and a list of unique dates as JSON."""
 
-# model.db.session.commit()
+    list_of_days = crud.get_list_of_days()
+    dict_num_days_and_all_dates = {
+        "total_unique_days": len(list_of_days), 
+        "list_unique_dates": list_of_days}
 
-# query1 = model.Country.query.all()
-# print(f"###### {query1[0].country}\n\n\n")
+    return jsonify(dict_num_days_and_all_dates)
+
+@app.route("/api/get-cases-by-date")
+def get_cases_by_date():
+    """Returns the total cases for a all countries by chosen date."""
+
+    date_queried = request.args.get('date')
+
+    cases_for_all_countries_by_date = crud.get_country_cases_by_date(date_queried)
+    # print(cases_for_all_countries_by_date)
+
+    return cases_for_all_countries_by_date
 
 
 

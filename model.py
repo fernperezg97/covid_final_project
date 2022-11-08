@@ -23,14 +23,29 @@ class Country(db.Model):
 
     country_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     country = db.Column(db.String(50))
-    country_slug = db.Column(db.String(50))
-    country_code = db.Column(db.String(2))
 
-# class CovidRecord(db.Model):
-#     __tablename__ = 'covidrecords'
+    covidrecords = db.relationship("CovidRecord", back_populates="country")
 
-#     country_id = db.Column(db.Integer, db.ForeignKey(Country.country_id))
-#     date = db.Column(db.)
+    def __repr__(self):
+        "Show info about country."
+
+        return f"<Country country_id={self.country_id} country={self.country}>"
+
+
+class CovidRecord(db.Model):
+    __tablename__ = 'covidrecords'
+
+    record_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    country_id = db.Column(db.Integer, db.ForeignKey(Country.country_id))
+    date = db.Column(db.Date)
+    total_cases = db.Column(db.Integer)
+
+    country = db.relationship("Country", back_populates="covidrecords")
+
+    def __repr__(self):
+        "Show info about covidrecord."
+
+        return f"<CovidRecord record_id={self.record_id} country_id={self.country_id}>"
 
 if __name__ == "__main__":
     from server import app

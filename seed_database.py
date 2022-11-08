@@ -19,44 +19,40 @@ model.db.create_all()
 
 """Grab all countries from API"""
 
-url = "https://api.covid19api.com/countries"
-
-payload = {}
-headers = {}
-
-rows = len(model.Country.query.all())
-countries = requests.request("GET", url, headers=headers, data=payload)
-
-while (rows != 248):
-    while (countries.status_code != 200):
-        countries = requests.request("GET", url, headers=headers, data=payload)
-        print(f"Countries status code: {countries.status_code}")
-        time.sleep(5)
-
-    countries_dict = countries.json()
-    print(f"\n\nSTATUS: ({countries})\n\n")
-
-    for country in countries_dict:
-        print(f"Type: {type(country)} - Country: {country}")
-        country_name = country.get("Country")
-        print(f"Country Name: {country_name}\n")
-        input()
-    
-        # country_slug = country.get("Slug")
-        # country_id = country.get("ISO2")
-        # country_instance = crud.create_country(country_name, country_slug, country_id)
-        # print(f"I'm adding country: {country_name}")
-        # model.db.session.add(country_instance)
-    model.db.session.commit()
-    time.sleep(1)
-    rows = len(model.Country.query.all())
-
-print(model.Country.query.all())
+url_countries = "https://covid-193.p.rapidapi.com/countries"
+url_history = "https://covid-193.p.rapidapi.com/history"
 
 
-# print(f"These are the countries: {countries} \n\n\n")
-# print(f"#########  There are this many countries: {len(countries_dict)}\n\n\n")
-# print(f"This is the countries' dictionary: {countries_dict}")
+headers = {
+	"X-RapidAPI-Key": "78d537ce70msh2a0870e288ea127p18e59ejsne7d9e326bb10",
+	"X-RapidAPI-Host": "covid-193.p.rapidapi.com"
+}
+
+countries = requests.request("GET", url_countries, headers=headers)
+countries_dict = countries.json()
+country_list = countries_dict.get("response")
+
+# print(countries_dict.get("response"))
+
+for country in country_list:
+    country_instance = crud.create_country(country)
+    model.db.session.add(country_instance)
+    querystring = {"country":country}
+    dates_and_cases_by_country = requests.request("GET", url_history, headers=headers, params=querystring)
+    dates_and_cases_by_country_dict = dates_and_cases_by_country.json()
+    dates_and_cases_by_country_list = dates_and_cases_by_country_dict.get("response")
+    date = 0
+    for dictionary in dates_and_cases_by_country_list:
+        # if date doesn't match previously stored date, add new date and cases to database
+        if date != dictionary["day"]:
+            date = dictionary["day"]
+            total_cases = dictionary["cases"]["total"]
+            country_id = crud.get_id_by_country_name(country)
+            covid_record_instance = crud.create_covid_record(country_id, date, total_cases)
+            model.db.session.add(covid_record_instance)
+
+model.db.session.commit()
+
 
 
 
