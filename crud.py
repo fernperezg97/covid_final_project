@@ -56,10 +56,10 @@ def get_list_of_days():
 def get_country_cases_by_date(user_date):
     """Returns cases for each country by chosen date."""
 
-    country_date_cases = db.session.query(Country.country, CovidRecord.date, CovidRecord.total_cases).join(CovidRecord).filter(CovidRecord.date==user_date).all()
+    country_date_cases = db.session.query(Country.country, CovidRecord.total_cases).join(CovidRecord).filter(CovidRecord.date==user_date).all()
     
-    for instance in country_date_cases:
-        print(instance)
+    # for instance in country_date_cases:
+    #     print(instance)
 
     return country_date_cases
 

@@ -6,7 +6,7 @@ import requests
 import crud
 # import jinga2
 import os
-
+from updated_keys import new_keys
 from jinja2 import StrictUndefined
 from model import connect_to_db, db
 
@@ -62,12 +62,21 @@ def get_list_of_days():
 def get_cases_by_date():
     """Returns the total cases for a all countries by chosen date."""
 
-    date_queried = request.args.get('date')
+    date_query_string = request.args.get("date") # grabs client date input on slider
 
-    cases_for_all_countries_by_date = crud.get_country_cases_by_date(date_queried)
-    # print(cases_for_all_countries_by_date)
+    cases_for_all_countries_by_date = crud.get_country_cases_by_date(date_query_string) # returns a list of tuples w/ countries and cases
+    dict_cases_by_country = dict(cases_for_all_countries_by_date) # convert that list of tuples to a dictionary w/ multiple "key":value pairs bc you can't pass in a tuple to js
 
-    return cases_for_all_countries_by_date
+    original_keys_list = list(dict_cases_by_country.keys())
+
+    for key in original_keys_list:
+        if (key in new_keys):
+            dict_cases_by_country[new_keys[key]] = dict_cases_by_country.pop(key)
+
+
+    print(dict_cases_by_country)
+
+    return dict_cases_by_country
 
 
 
