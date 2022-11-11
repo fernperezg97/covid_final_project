@@ -47,6 +47,25 @@ class CovidRecord(db.Model):
 
         return f"<CovidRecord record_id={self.record_id} country_id={self.country_id}>"
 
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    password = db.Column(db.String(20))
+
+    def __repr__(self):
+        "Show info about user."
+
+        return f"<User user_id={self.user_id} email={self.email}>"
+
+
+
+
+
 if __name__ == "__main__":
     from server import app
 

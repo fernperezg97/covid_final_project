@@ -32,11 +32,19 @@ app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
 
 
-@app.route("/")
-def homepage():
-    """View Homepage."""
+@app.route("/login")
+def login():
+    """View login page."""
 
-    return render_template("homepage.html")
+    return render_template("login.html")
+
+
+@app.route("/register")
+def register():
+    """View register page when user clicks create account."""
+
+    return render_template("register.html")
+
 
 @app.route("/covid-timeline")
 def covid_timeline():
@@ -46,6 +54,7 @@ def covid_timeline():
     # print(total)
 
     return render_template("timeline.html")
+
 
 @app.route("/api/get-list-days")
 def get_list_of_days():
@@ -57,6 +66,7 @@ def get_list_of_days():
         "list_unique_dates": list_of_days}
 
     return jsonify(dict_num_days_and_all_dates)
+    
 
 @app.route("/api/get-cases-by-date")
 def get_cases_by_date():

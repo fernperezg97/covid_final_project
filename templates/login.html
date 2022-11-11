@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}COVID-19 Final Project{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/login.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="/static/login.css">
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>    
+{% endblock %}
+
+{% block body %}
+ <div id="root"></div>
+
+ <script type="text/jsx" src="/static/login.jsx"></script>
+{% endblock %}

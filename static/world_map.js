@@ -12,7 +12,7 @@ fetch('https://unpkg.com/world-atlas/countries-50m.json')
       datasets: [{
         label: 'Countries',
         // countries.map forms a list and uses d to iterate through that list and the result is a list with a separate dictionary for each country.
-        data: countries.map((d) => ({feature: d, value: Math.random()})), // feature is country name + geometry of the country | value is num confirmed cases for given country
+        data: countries.map((d) => ({feature: d})), // feature is country name + geometry of the country | value is num confirmed cases for given country
       }]
     },
     options: {
@@ -30,13 +30,18 @@ fetch('https://unpkg.com/world-atlas/countries-50m.json')
       }
     }
   });
-  console.log(chart.data);
+  // Initializing map display and populating with date of first COVID case (2020-03-22)
+  const date_query_string = new URLSearchParams({date: "2020-03-22"}).toString();
+  const query_Url = `/api/get-cases-by-date?${date_query_string}`;
+
+  display_cases_on_map(query_Url);
 });
+
 
 let total_unique_days;
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
-output.innerHTML = slider.value; // Display the default slider value
+output.innerHTML = "2022-03-22"; // Display the default slider value
 fetch('/api/get-list-days')
 .then((r) => r.json())
 .then((data) => { 
@@ -46,6 +51,7 @@ fetch('/api/get-list-days')
 
 
 // Update the current slider value (each time you drag the slider handle)
+
 slider.oninput = function() {
   output.innerHTML = total_unique_days[this.value]; // value dependent on where user drags slider
 }
@@ -57,6 +63,11 @@ slider.onchange = function() {
   const date_query_string = new URLSearchParams({date: chosen_date}).toString()
   const query_Url = `/api/get-cases-by-date?${date_query_string}`;
 
+  display_cases_on_map(query_Url) 
+}
+
+// To both intialize map when first presented on webpage and to change values as user changes slider.
+function display_cases_on_map(query_Url) {
   fetch(query_Url)
   .then((r) => r.json())
   .then((data) => {

@@ -8,6 +8,8 @@ if __name__ == '__main__':
 
 
 
+############## Country Functions ##############
+
 
 
 def create_country(name):
@@ -18,10 +20,25 @@ def create_country(name):
     return country
 
 
+
 def show_all_countries(): 
     """Return all countries"""
 
     return Country.query.all()
+
+
+
+def get_id_by_country_name(name):
+    """Get the id of a country by its name."""
+
+    first_country_instance = Country.query.filter_by(country=name).first()
+
+    return first_country_instance.country_id
+
+
+
+############## CovidRecord Functions ##############
+
 
 
 def create_covid_record(country_id_given, date_given, total_cases_given):
@@ -32,12 +49,6 @@ def create_covid_record(country_id_given, date_given, total_cases_given):
     return covid_record
 
 
-def get_id_by_country_name(name):
-    """Get the id of a country by its name."""
-
-    first_country_instance = Country.query.filter_by(country=name).first()
-
-    return first_country_instance.country_id
 
 
 def get_list_of_days():
@@ -53,6 +64,8 @@ def get_list_of_days():
     return date_list
 
 
+
+
 def get_country_cases_by_date(user_date):
     """Returns cases for each country by chosen date."""
 
@@ -65,6 +78,12 @@ def get_country_cases_by_date(user_date):
 
 
 
+    
+############## User Functions ##############
+
+
+
+# def get_password_by_email(email):
 
 
 
