@@ -46,6 +46,36 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/user-registration-info", methods=["POST"])
+def user_info_to_database():
+    """Send user input to database."""
+
+    firstName = request.json['firstName']
+    lastName = request.json['lastName']
+    email = request.json['email']
+    password = request.json['password']
+
+    crud.create_user_instance(firstName, lastName, email, password)
+
+    return ""
+
+
+@app.route("/user-login-info", methods=["POST"])
+def validate_user():
+    """Check if user exists in database."""
+
+    email = request.json['email']
+    password = request.json['password']
+
+    user_validation = crud.check_if_user_in_system(email, password)
+
+    if user_validation is None:
+        return render_template("login.html")
+    else:
+        return render_template("timeline.html")
+    
+
+
 @app.route("/covid-timeline")
 def covid_timeline():
     """View timeline from case 1 to present."""
@@ -66,7 +96,7 @@ def get_list_of_days():
         "list_unique_dates": list_of_days}
 
     return jsonify(dict_num_days_and_all_dates)
-    
+
 
 @app.route("/api/get-cases-by-date")
 def get_cases_by_date():

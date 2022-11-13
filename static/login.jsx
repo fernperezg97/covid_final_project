@@ -2,15 +2,21 @@
 
 // import React, { useState } from "react";
 
-function Login(props) {
+function Login() {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [firstName, setFirstName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
 
-    const handleSubmit = (e) => {
+    const submitUserLoginInfo = (e) => {
         e.preventDefault();
-        console.log(email);
+        // console.log(email);
+
+        fetch(`/user-login-info`,{
+            'method':'POST',
+             headers : {
+            'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'email': email, 'password': password})
+        })
     }
 
     return (
@@ -24,11 +30,11 @@ function Login(props) {
             </div>
             <div className="right">
                 <h5>Login</h5>
-                <p>Don't have an account? <a href="/register">Create Your Account</a> it takes less than a minute</p>
+                <p>Don't have an account? <a href="/register">Create Your Account</a> it takes less than a minute.</p>
                 <div className="inputs">
-                    <input type="text" placeholder="username" />
+                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="email" />
                     <br />
-                    <input type="password" placeholder="password" />
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" />
                 </div>
                 <br /><br />
                 <div className="remember-me--forget-password">
@@ -40,7 +46,8 @@ function Login(props) {
                 <p>forget password?</p>
                 </div>
                 <br />
-                <button onClick={() => props.onFormSwitch('register')}>Login</button>
+                {/* <button onClick={() => props.onFormSwitch('register')}>Login</button> */}
+                <button type="submit" onClick={submitUserLoginInfo}>Login</button>
             </div>
         </div>
     );

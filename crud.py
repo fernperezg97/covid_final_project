@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, Country, CovidRecord, connect_to_db
+from model import db, Country, CovidRecord, User, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -83,7 +83,23 @@ def get_country_cases_by_date(user_date):
 
 
 
-# def get_password_by_email(email):
 
+def create_user_instance(get_first_name, get_last_name, get_email, get_password):
+    """Returns a user instance with an id, first_name, last_name, email, and password."""
+
+    user_instance = User(first_name=get_first_name, last_name=get_last_name, email=get_email, password=get_password)
+    db.session.add(user_instance)
+    db.session.commit()
+
+    return user_instance
+
+
+
+def check_if_user_in_system(check_email, check_password):
+    """Checks if a user exists using email, and password provided at login."""
+
+    user_in_system_check = User.query.filter_by(email=check_email, password=check_password).first()   
+
+    return user_in_system_check
 
 
