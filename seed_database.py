@@ -24,8 +24,8 @@ url_history = "https://covid-193.p.rapidapi.com/history"
 
 
 headers = {
-	"X-RapidAPI-Key": "78d537ce70msh2a0870e288ea127p18e59ejsne7d9e326bb10",
-	"X-RapidAPI-Host": "covid-193.p.rapidapi.com"
+	"X-RapidAPI-Key": os.environ['RAPID_API_KEY_IN_HEADERS'],
+	"X-RapidAPI-Host": os.environ['RAPID_API_HOST_IN_HEADERS']
 }
 
 countries = requests.request("GET", url_countries, headers=headers)
