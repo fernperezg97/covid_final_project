@@ -1,5 +1,7 @@
 let chart;
 let countries;
+let userChoice = "Cases";
+
 fetch('https://unpkg.com/world-atlas/countries-50m.json')
 .then((r) => r.json())
 .then((data) => {
@@ -39,9 +41,9 @@ fetch('https://unpkg.com/world-atlas/countries-50m.json')
 
 
 let total_unique_days;
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = "2022-03-22"; // Display the default slider value
+const slider = document.getElementById("myRange");
+const output = document.getElementById("demo");
+output.innerHTML = "2020-03-22"; // Display the default slider value
 fetch('/api/get-list-days')
 .then((r) => r.json())
 .then((data) => { 
@@ -61,9 +63,14 @@ slider.oninput = function() {
 slider.onchange = function() {
   let chosen_date = total_unique_days[this.value];
   const date_query_string = new URLSearchParams({date: chosen_date}).toString()
-  const query_Url = `/api/get-cases-by-date?${date_query_string}`;
 
-  display_cases_on_map(query_Url) 
+  if (userChoice == "Cases") {
+    const query_Url = `/api/get-cases-by-date?${date_query_string}`;
+    display_cases_on_map(query_Url) 
+  } else {
+    const query_Url = `/api/get-deaths-by-date?${date_query_string}`;
+    display_cases_on_map(query_Url) // displays deaths
+  } 
 }
 
 // To both intialize map when first presented on webpage and to change values as user changes slider.
@@ -94,4 +101,23 @@ function removeData(chart) {
   chart.data.datasets[0].data = [];
       // console.log(chart.data.datasets);
   chart.update();
+}
+
+
+function dropdownOptions() {
+  const mylist = document.getElementById("myList");
+  let chosen_date = output.innerHTML;
+  const date_query_string = new URLSearchParams({date: chosen_date}).toString();
+
+  userChoice = mylist.options[mylist.selectedIndex].text;
+  console.log("Person chose: ", userChoice);
+  console.log("Date: ", chosen_date);
+
+  if (userChoice == "Cases") {
+    const query_Url = `/api/get-cases-by-date?${date_query_string}`;
+    display_cases_on_map(query_Url); 
+  } else {
+    const query_Url = `/api/get-deaths-by-date?${date_query_string}`;
+    display_cases_on_map(query_Url); // displays the deaths
+  }
 }

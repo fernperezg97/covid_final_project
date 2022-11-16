@@ -78,6 +78,19 @@ def get_country_cases_by_date(user_date):
 
 
 
+
+def get_country_deaths_by_date(user_date):
+    """Returns cases for each country by chosen date."""
+
+    country_date_deaths = db.session.query(Country.country, CovidRecord.total_deaths).join(CovidRecord).filter(CovidRecord.date==user_date).all()
+
+    # for instance in country_date_cases:
+    #     print(instance)
+
+    return country_date_deaths
+
+
+
     
 ############## User Functions ##############
 

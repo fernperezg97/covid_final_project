@@ -43,19 +43,17 @@ for country in country_list:
     dates_and_cases_by_country_list = dates_and_cases_by_country_dict.get("response")
     date = 0
     for dictionary in dates_and_cases_by_country_list:
-        # if date doesn't match previously stored date, add new date and cases to database 
+        # if date doesn't match previously stored date, add new date and cases to database (AND DEATHS)
         if date != dictionary["day"]:
             date = dictionary["day"]
             total_cases = dictionary["cases"]["total"]
+            total_deaths = dictionary["deaths"]["total"]
             country_id = crud.get_id_by_country_name(country)
-            covid_record_instance = crud.create_covid_record(country_id, date, total_cases)
+            covid_record_instance = crud.create_covid_record(country_id, date, total_cases, total_deaths)
             model.db.session.add(covid_record_instance)
 
 model.db.session.commit()
 
-
-for user in user_instance:
-    if user_in_system_check is True:
 
 
 

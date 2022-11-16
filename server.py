@@ -159,6 +159,29 @@ def get_cases_by_date():
 
 
 
+
+@app.route("/api/get-deaths-by-date")
+def get_deaths_by_date():
+    """Returns the total deaths for a all countries by chosen date."""
+
+    date_query_string = request.args.get("date") # grabs client date input on slider
+
+    deaths_for_all_countries_by_date = crud.get_country_deaths_by_date(date_query_string) # returns a list of tuples w/ countries and deaths
+    dict_deaths_by_country = dict(deaths_for_all_countries_by_date) # convert that list of tuples to a dictionary w/ multiple "key":value pairs bc you can't pass in a tuple to js
+
+    original_keys_list = list(dict_deaths_by_country.keys())
+
+    for key in original_keys_list:
+        if (key in new_keys):
+            dict_deaths_by_country[new_keys[key]] = dict_deaths_by_country.pop(key)
+
+
+    print(dict_deaths_by_country)
+
+    return dict_deaths_by_country
+
+
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(debug=True, host="0.0.0.0")
