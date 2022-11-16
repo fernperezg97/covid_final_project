@@ -39,6 +39,7 @@ class CovidRecord(db.Model):
     country_id = db.Column(db.Integer, db.ForeignKey(Country.country_id))
     date = db.Column(db.Date)
     total_cases = db.Column(db.Integer)
+    total_deaths = db.Column(db.Integer)
 
     country = db.relationship("Country", back_populates="covidrecords")
 

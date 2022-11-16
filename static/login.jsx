@@ -7,8 +7,8 @@ function Login() {
     const [password, setPassword] = React.useState('');
 
     const submitUserLoginInfo = (e) => {
-        e.preventDefault();
-        // console.log(email);
+        // e.preventDefault();
+        console.log("submitUserLogin function was called.");
 
         fetch(`/user-login-info`,{
             'method':'POST',
@@ -16,7 +16,19 @@ function Login() {
             'Content-Type':'application/json'
             },
             body:JSON.stringify({'email': email, 'password': password})
-        })
+            })
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log(responseData);
+                if (responseData.result === 'unsuccessful') {
+                    alert(responseData.status);
+                    console.log("alert");
+                    ReactDOM.render(<Login/>, document.querySelector('#root'));
+                } else {
+                    console.log("login successful");
+                    window.location.href = '/covid-timeline'
+                }
+        });
     }
 
     return (

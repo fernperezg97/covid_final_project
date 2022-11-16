@@ -39,11 +39,41 @@ def login():
     return render_template("login.html")
 
 
+
+
 @app.route("/register")
 def register():
     """View register page when user clicks create account."""
 
     return render_template("register.html")
+
+
+
+
+@app.route("/user-registration-check", methods=['POST', 'GET'])
+def registration_duplicates_check():
+    """Check if user exists in database."""
+
+    email = request.json['email']
+    password = request.json['password']
+
+    user_exists = crud.check_if_user_in_system(email, password)
+
+    if user_exists is None:
+        firstName = request.json['firstName']
+        lastName = request.json['lastName']
+        email = request.json['email']
+        password = request.json['password']
+
+        crud.create_user_instance(firstName, lastName, email, password)
+        print("I got here.")
+    
+        return {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}
+    else:
+
+        return {"result": "unsuccessful", "status": "USER ALREADY EXISTS. PLEASE LOGIN OR CREATE NEW ACCOUNT."}
+
+
 
 
 @app.route("/user-registration-info", methods=["POST"])
@@ -56,13 +86,15 @@ def user_info_to_database():
     password = request.json['password']
 
     crud.create_user_instance(firstName, lastName, email, password)
+    print("I got here.")
+    return render_template("login.html")
 
-    return ""
+
 
 
 @app.route("/user-login-info", methods=["POST"])
 def validate_user():
-    """Check if user exists in database."""
+    """Check if user exists for login using email and password."""
 
     email = request.json['email']
     password = request.json['password']
@@ -70,10 +102,13 @@ def validate_user():
     user_validation = crud.check_if_user_in_system(email, password)
 
     if user_validation is None:
-        return render_template("login.html")
+        print("User Not Found")
+        return {"result": "unsuccessful", "status": "EMAIL OR PASSWORD INCORRECT. PLEASE TRY AGAIN."}
     else:
-        return render_template("timeline.html")
-    
+        print("Login Successful!")
+        return {"result": "successful"}
+
+      
 
 
 @app.route("/covid-timeline")
@@ -86,6 +121,8 @@ def covid_timeline():
     return render_template("timeline.html")
 
 
+
+
 @app.route("/api/get-list-days")
 def get_list_of_days():
     """Return dictionary containing total number of unique days and a list of unique dates as JSON."""
@@ -96,6 +133,8 @@ def get_list_of_days():
         "list_unique_dates": list_of_days}
 
     return jsonify(dict_num_days_and_all_dates)
+
+
 
 
 @app.route("/api/get-cases-by-date")

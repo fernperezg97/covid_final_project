@@ -41,10 +41,10 @@ def get_id_by_country_name(name):
 
 
 
-def create_covid_record(country_id_given, date_given, total_cases_given):
+def create_covid_record(country_id_given, date_given, total_cases_given, total_deaths_given):
     """Create a new covid record instance."""
 
-    covid_record = CovidRecord(country_id=country_id_given, date=date_given, total_cases=total_cases_given)
+    covid_record = CovidRecord(country_id=country_id_given, date=date_given, total_cases=total_cases_given, total_deaths=total_deaths_given)
 
     return covid_record
 

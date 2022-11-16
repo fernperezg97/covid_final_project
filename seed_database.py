@@ -43,7 +43,7 @@ for country in country_list:
     dates_and_cases_by_country_list = dates_and_cases_by_country_dict.get("response")
     date = 0
     for dictionary in dates_and_cases_by_country_list:
-        # if date doesn't match previously stored date, add new date and cases to database
+        # if date doesn't match previously stored date, add new date and cases to database 
         if date != dictionary["day"]:
             date = dictionary["day"]
             total_cases = dictionary["cases"]["total"]
@@ -52,6 +52,11 @@ for country in country_list:
             model.db.session.add(covid_record_instance)
 
 model.db.session.commit()
+
+
+for user in user_instance:
+    if user_in_system_check is True:
+
 
 
 

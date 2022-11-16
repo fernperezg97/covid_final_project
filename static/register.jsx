@@ -7,16 +7,28 @@ function Register() {
     const [password, setPassword] = React.useState('');
 
     const submitUserRegisterInfo = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         // console.log(firstName, lastName, email, password);
 
-        fetch(`/user-registration-info`,{
+        fetch(`/user-registration-check`,{
             'method':'POST',
              headers : {
             'Content-Type':'application/json'
             },
             body:JSON.stringify({'firstName': firstName, 'lastName': lastName, 'email': email, 'password': password})
         })
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log(responseData);
+                if (responseData.result === 'unsuccessful') {
+                    alert(responseData.status);
+                    console.log("alert");
+                } else {
+                    // console.log("login successful");
+                    window.location.href = '/login'
+                    alert(responseData.status);
+            }
+        });
     }
 
     return (
