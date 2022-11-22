@@ -15,12 +15,21 @@ fetch('https://unpkg.com/world-atlas/countries-50m.json')
         label: 'Countries',
         // countries.map forms a list and uses d to iterate through that list and the result is a list with a separate dictionary for each country.
         data: countries.map((d) => ({feature: d})), // feature is country name + geometry of the country | value is num confirmed cases for given country
+        borderColor: "grey"
       }]
     },
     options: {
       showOutline: true,
       showGraticule: false,
+      layout: {
+        padding: {
+          right: 60
+        }
+      },
       plugins: {
+        customCanvasBackgroundColor: {
+          color: '#F7F7F7'
+        },
         legend: {
           display: false
         },
@@ -28,9 +37,39 @@ fetch('https://unpkg.com/world-atlas/countries-50m.json')
       scales: {
         xy: {
           projection: 'equalEarth'
+        },
+        color: {
+          // interpolate: "orRd",
+
+          interpolate: (v) => {
+                if (v < 0.1){
+                  return "#ffff4d";
+                } else if (v < 0.2){
+                  return "#ffd500";
+                } else if (v < 0.3){
+                  return "#ffbb33";
+                } else if (v < 0.4){
+                  return "#ffaa00";
+                } else if (v < 0.5){
+                  return "#ff9933";
+                } else if (v < 0.6){
+                  return "#ff7733";
+                } else if (v < 0.7){
+                  return "#ff5500";
+                } else if (v < 0.8){
+                  return "#cc2200";
+                } else if (v < 0.9){
+                  return "#991900";
+                } else if (v < 1){
+                  return "#660000";
+                } else {
+                  return "#ffffff";
+                }
+              },
         }
       }
-    }
+    },
+    plugins: [plugin],
   });
   // Initializing map display and populating with date of first COVID case (2020-03-22)
   const date_query_string = new URLSearchParams({date: "2020-03-22"}).toString();
@@ -39,6 +78,17 @@ fetch('https://unpkg.com/world-atlas/countries-50m.json')
   display_cases_on_map(query_Url);
 });
 
+const plugin = {
+  id: 'customCanvasBackgroundColor',
+  beforeDraw: (chart, args, options) => {
+    const {ctx} = chart;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = options.color || '#99ffff';
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  }
+};
 
 let total_unique_days;
 const slider = document.getElementById("myRange");
