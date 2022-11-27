@@ -21,6 +21,7 @@ model.db.create_all()
 
 url_countries = "https://covid-193.p.rapidapi.com/countries"
 url_history = "https://covid-193.p.rapidapi.com/history"
+url_statistics = "https://covid-193.p.rapidapi.com/statistics"
 
 
 headers = {
@@ -32,7 +33,31 @@ countries = requests.request("GET", url_countries, headers=headers)
 countries_dict = countries.json()
 country_list = countries_dict.get("response")
 
-# print(countries_dict.get("response"))
+
+country_stats = requests.request("GET", url_statistics, headers=headers)
+country_stats_dict = country_stats.json()
+country_stats_list = country_stats_dict.get("response")
+
+
+for country in country_stats_list:
+    country_name = country["country"]
+    population = country["population"]
+    total_cases_stats = country["cases"]["total"]
+    cases_1m = country["cases"]["1M_pop"]
+    active_cases = country["cases"]["active"]
+    total_deaths_stats = country["deaths"]["total"]
+    deaths_1m = country["deaths"]["1M_pop"]
+    total_tests = country["tests"]["total"]
+    tests_1m = country["tests"]["1M_pop"]
+    print(f"CONTENT: ", country_name, population, total_cases_stats, cases_1m, active_cases, total_deaths_stats, deaths_1m, total_tests, tests_1m)
+    if country_name == "All":
+        continue
+    country_stats_instance = crud.create_country_stats_instance(country_name, population, total_cases_stats, cases_1m, active_cases, total_deaths_stats, deaths_1m, total_tests, tests_1m)
+    model.db.session.add(country_stats_instance)
+
+
+
+
 
 for country in country_list:
     country_instance = crud.create_country(country)

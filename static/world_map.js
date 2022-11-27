@@ -2,6 +2,22 @@ let chart;
 let countries;
 let userChoice = "Cases";
 
+// search bar functionality
+const searchBar = document.querySelector("#search-by-country");
+
+searchBar.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  let userSearchSelection = document.querySelector("#country-search-bar").value;
+  let dateAtTimeOfSearch = document.querySelector("#date").innerHTML;
+  console.log(userSearchSelection, dateAtTimeOfSearch);
+
+  sessionStorage.setItem("searchValue", userSearchSelection);
+  sessionStorage.setItem("dateAtSearch", dateAtTimeOfSearch);
+  window.location.href = "country-search";
+  return;
+})
+
+// creation of map
 fetch('https://unpkg.com/world-atlas/countries-50m.json')
 .then((r) => r.json())
 .then((data) => {
@@ -92,7 +108,7 @@ const plugin = {
 
 let total_unique_days;
 const slider = document.getElementById("myRange");
-const output = document.getElementById("demo");
+const output = document.getElementById("date"); // grabs everything within HTML object that has the id "date"
 output.innerHTML = "2020-03-22"; // Display the default slider value
 fetch('/api/get-list-days')
 .then((r) => r.json())
@@ -171,3 +187,4 @@ function dropdownOptions() {
     display_cases_on_map(query_Url); // displays the deaths
   }
 }
+

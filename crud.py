@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, Country, CovidRecord, User, connect_to_db
+from model import db, Country, CovidRecord, User, CurrCountryStat, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -116,3 +116,50 @@ def check_if_user_in_system(check_email, check_password):
     return user_in_system_check
 
 
+
+
+    ############## Country Statistics Functions ##############
+
+
+
+
+ 
+def create_country_stats_instance(country_name_stat, population_stat, total_cases, \
+                                 cases_1m_stat, active_cases_stat, total_deaths, \
+                                 deaths_1m_stat, total_tests_stat, tests_1m_stat):
+
+    country_stats_record = CurrCountryStat(country_name=country_name_stat, population=population_stat, total_cases_stats=total_cases, \
+                                            cases_1m=cases_1m_stat, active_cases=active_cases_stat, total_deaths_stats=total_deaths, \
+                                            deaths_1m=deaths_1m_stat, total_tests=total_tests_stat, tests_1m=tests_1m_stat)
+    
+    return country_stats_record
+
+
+
+def stats_per_country(country):
+    """Returns all current stats for searched country."""
+
+    country_stats = CurrCountryStat.query.filter_by(country_name=country).first()
+
+    country_stats_dict = country_stats.__dict__
+    country_stats_dict.pop('_sa_instance_state', None)
+
+    return country_stats_dict
+
+
+
+
+
+############## Line Chart Functions ##############
+
+
+
+
+
+def cases_and_deaths_for_chosen_country(country_provided):
+    """Queries the database for all existing records of cases and deaths in order to update the line chart."""
+
+    country_line_graph_stats = db.session.query(Country.country, CovidRecord.date, CovidRecord.total_cases, CovidRecord.total_deaths).join(CovidRecord).filter(Country.country==country_provided).all()
+    print(country_line_graph_stats)
+
+    return country_line_graph_stats

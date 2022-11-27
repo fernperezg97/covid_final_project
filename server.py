@@ -66,7 +66,7 @@ def registration_duplicates_check():
         password = request.json['password']
 
         crud.create_user_instance(firstName, lastName, email, password)
-        print("I got here.")
+        # print("I got here.")
     
         return {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}
     else:
@@ -86,7 +86,7 @@ def user_info_to_database():
     password = request.json['password']
 
     crud.create_user_instance(firstName, lastName, email, password)
-    print("I got here.")
+    # print("I got here.")
     return render_template("login.html")
 
 
@@ -102,10 +102,10 @@ def validate_user():
     user_validation = crud.check_if_user_in_system(email, password)
 
     if user_validation is None:
-        print("User Not Found")
+        # print("User Not Found")
         return {"result": "unsuccessful", "status": "EMAIL OR PASSWORD INCORRECT. PLEASE TRY AGAIN."}
     else:
-        print("Login Successful!")
+        # print("Login Successful!")
         return {"result": "successful"}
 
       
@@ -117,8 +117,43 @@ def covid_timeline():
 
     # total = crud.get_total_num_dates()
     # print(total)
+    # print(f"# Countries: {len(crud.show_all_countries())}\n\n\n\n")
 
     return render_template("timeline.html")
+
+
+
+
+@app.route("/country-search")
+def country_search_result():
+    """View country_search_result.html page when user types country and hits search button."""
+
+    return render_template("country_search_result.html")
+
+
+
+
+@app.route("/api/get-country-search-stats")
+def country_search_stats():
+    """Return the statistics of a particular country when searched."""
+
+    country_search_name = request.args.get("country") # grabs user country search input
+    country_search_stats = crud.stats_per_country(country_search_name)
+
+    return jsonify(country_search_stats)
+
+
+
+
+@app.route("/api/get-line-graph-stats")
+def line_graph_stats():
+    """Returnt the total cases and total deaths for user searched country."""
+
+    line_graph_country_name = request.args.get("country") # uses user country search input to update line graph cases and deaths
+    line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(line_graph_country_name)
+    print(line_graph_cases_deaths_by_country)
+
+    return jsonify(line_graph_cases_deaths_by_country)
 
 
 
@@ -153,7 +188,7 @@ def get_cases_by_date():
             dict_cases_by_country[new_keys[key]] = dict_cases_by_country.pop(key)
 
 
-    print(dict_cases_by_country)
+    # print(dict_cases_by_country)
 
     return dict_cases_by_country
 
@@ -176,7 +211,7 @@ def get_deaths_by_date():
             dict_deaths_by_country[new_keys[key]] = dict_deaths_by_country.pop(key)
 
 
-    print(dict_deaths_by_country)
+    # print(dict_deaths_by_country)
 
     return dict_deaths_by_country
 

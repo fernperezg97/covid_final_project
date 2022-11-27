@@ -7,8 +7,14 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Hello!</h1>
+  <h1>COVID-19 Timeline</h1>
   <!-- <canvas id="canvas"></canvas> -->
+  <div>
+    <form id="search-by-country" >
+      <input type="text" name="message" id="country-search-bar" placeholder="Search by country"/>
+      <input type="submit" id="search-bar-submit" />
+    </form>
+  </div>
 
   <div class="chartCard">
     <div class="chartBox">
@@ -16,10 +22,11 @@
     </div>
   </div>
 
-
   <div class="slidecontainer"> <!--Slider that allows user to go through dates.-->
     <input type="range" min="1" max="100" value="1" class="slider" id="myRange">
-    <p>Value: <span id="demo"></span></p>
+    <p>
+      Date: <span id="date"></span>
+    </p>
   </div>
 
   <div class="dropdown">

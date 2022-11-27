@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} * Country Name Here * {% endblock %}
+
+{% block head %}
+<h1 id="country-name">  
+    * Country Name Here *
+</h1>    
+{% endblock %}
+
+{% block body %}
+<span id ="countrySearchResult"></span>
+<!-- <p> hello world</p> -->
+<p>The date provided was: <span id="dateAtSearch"></span></p>
+
+<div>
+    <p>Population: <span id="population"></span></p>
+    <p>Total Cases: <span id="cases"></span></p>
+    <p>Cases Per 1 Million: <span id="cases-1m"></span></p>
+    <p>Active Cases: <span id="active"></span></p>
+    <p>Total Deaths: <span id="deaths"></span></p>
+    <p>Deaths Per 1 Million: <span id="deaths-1m"></span></p>
+    <p>Total Tests Administered: <span id="tests"></span></p> 
+    <p>Tests Per 1 Million: <span id="tests-1m"></span></p>   
+</div>
+
+<div class="chart-container">
+    <canvas id="line-chart" width="800" height="450"></canvas>
+</div>
+
+<script src="https://unpkg.com/chart.js@3"></script>
+<script type="text/javascript" src="/static/country_search_result.js"></script>
+{% endblock %}

@@ -1,7 +1,11 @@
   body {
-    width: 80vw;
+    width: 100vw;
     height: 100vh;
     justify-content: center;
+  }
+  
+  h1 {
+     text-align: center;
   }
 
   /* Map Style */
