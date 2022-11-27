@@ -160,6 +160,9 @@ def cases_and_deaths_for_chosen_country(country_provided):
     """Queries the database for all existing records of cases and deaths in order to update the line chart."""
 
     country_line_graph_stats = db.session.query(Country.country, CovidRecord.date, CovidRecord.total_cases, CovidRecord.total_deaths).join(CovidRecord).filter(Country.country==country_provided).all()
-    print(country_line_graph_stats)
+    
+    # country_line_graph_stats_dict = country_line_graph_stats.__dict__
+    # country_line_graph_stats_dict.pop('_sa_instance_state', None)
+    # print(country_line_graph_stats)
 
     return country_line_graph_stats

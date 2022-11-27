@@ -147,13 +147,27 @@ def country_search_stats():
 
 @app.route("/api/get-line-graph-stats")
 def line_graph_stats():
-    """Returnt the total cases and total deaths for user searched country."""
+    """Returns the total cases and total deaths for user searched country."""
+
+    tuple_dates = []
+    tuple_cases = []
+    tuple_deaths = []
+    dict_for_line_graph = {}
 
     line_graph_country_name = request.args.get("country") # uses user country search input to update line graph cases and deaths
-    line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(line_graph_country_name)
-    print(line_graph_cases_deaths_by_country)
+    line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(line_graph_country_name) # query returns list of tuples (country, datetime, cases, deaths)
+    line_graph_cases_deaths_by_country.reverse()
 
-    return jsonify(line_graph_cases_deaths_by_country)
+    for tup in line_graph_cases_deaths_by_country:
+        tuple_dates.append(str(tup[1]))
+        tuple_cases.append(tup[2])
+        tuple_deaths.append(tup[3])
+
+    dict_for_line_graph = {"dates": tuple_dates, "cases": tuple_cases, "deaths": tuple_deaths}
+    print(dict_for_line_graph)
+
+
+    return dict_for_line_graph
 
 
 

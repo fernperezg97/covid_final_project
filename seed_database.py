@@ -49,7 +49,7 @@ for country in country_stats_list:
     deaths_1m = country["deaths"]["1M_pop"]
     total_tests = country["tests"]["total"]
     tests_1m = country["tests"]["1M_pop"]
-    print(f"CONTENT: ", country_name, population, total_cases_stats, cases_1m, active_cases, total_deaths_stats, deaths_1m, total_tests, tests_1m)
+    # print(f"CONTENT: ", country_name, population, total_cases_stats, cases_1m, active_cases, total_deaths_stats, deaths_1m, total_tests, tests_1m)
     if country_name == "All":
         continue
     country_stats_instance = crud.create_country_stats_instance(country_name, population, total_cases_stats, cases_1m, active_cases, total_deaths_stats, deaths_1m, total_tests, tests_1m)

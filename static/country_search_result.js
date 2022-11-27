@@ -50,18 +50,42 @@ fetch(lineGraphUrl)
     .then((countryData) => countryData.json())
     .then((casesAndDeathsData) => {
         console.log(casesAndDeathsData);
-    })
 
-new Chart(document.getElementById("line-chart"), {
-    type: 'line',
-    data: {
-      labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-      datasets: []
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'World population per region (in millions)'
-      }
-    }
-  });
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+              labels: casesAndDeathsData["dates"],
+              datasets: [{
+                label: 'Cases',
+                data: casesAndDeathsData["cases"],
+                fill: false,
+                borderColor: 'rgb(0, 0, 255)',
+                tension: 0.1 
+              }, 
+                {
+                label: 'Deaths',
+                data: casesAndDeathsData["deaths"],
+                fill: false,
+                borderColor: 'rgb(255, 0, 0)',
+                tension: 0.1 
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'COVID-19 Cases and Deaths from March 22, 2020 - Present'
+                  }
+                },
+                scales: {
+                    xAxes: {
+                        // type: 'time',
+                        ticks: {
+                            // autoSkip: true,
+                            maxTicksLimit: 10,
+                        }
+                    }
+                },
+            }
+        });
+})
