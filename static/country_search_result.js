@@ -1,5 +1,8 @@
 // page that will display the search result country data
 
+// import { countries } from './world_map.js'
+// console.log("Countries are:", countries);
+
 const countrySearched = sessionStorage.getItem("searchValue");
 const dateSearched = sessionStorage.getItem("dateAtSearch");
 
