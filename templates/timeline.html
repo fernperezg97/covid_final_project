@@ -8,13 +8,21 @@
 
 {% block body %}
   <h1>COVID-19 Timeline</h1>
-  <!-- <canvas id="canvas"></canvas> -->
-  <div>
-    <form  id="search-by-country" >
-      <input type="text" name="message" id="country-search-bar" placeholder="Search by country"/>
-      <input type="submit" id="search-bar-submit" />
-    </form>
-  </div>
+  <h2>
+    <div>
+      <form autocomplete="off" id="search-by-country" >
+        <div class="autocomplete">
+          <input type="text" name="message" id="country-search-bar" placeholder="Search by country" onKeyUp="showResults(this.value)"/>
+          <input type="submit" id="search-bar-submit" />
+          <div id="result"></div>
+        </div>
+      </form>
+    </div>
+
+    <div class="logout">
+      <button id="logout-button" type="button">Log Out</button>
+    </div>
+  </h2>
 
   <div class="chartCard">
     <div class="chartBox">
@@ -37,6 +45,12 @@
       </select>
     </form>
   </div>  
+
+  <div id="welcome-back">
+    <p>
+      
+    </p>
+  </div>
 
   <script src="https://unpkg.com/chart.js@3"></script>
   <script src="https://unpkg.com/chartjs-chart-geo@3"></script>

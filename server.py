@@ -29,6 +29,13 @@ app.jinja_env.undefined = StrictUndefined
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
 
+@app.route("/")
+def login_homepage():
+    """Homepage is now login page."""
+
+    return render_template("login.html")
+
+
 
 
 
@@ -105,8 +112,36 @@ def validate_user():
         # print("User Not Found")
         return {"result": "unsuccessful", "status": "EMAIL OR PASSWORD INCORRECT. PLEASE TRY AGAIN."}
     else:
-        # print("Login Successful!")
+        session['name'] = user_validation.first_name
+        session['user_id'] = user_validation.user_id
+        # print(session['name'], session['user_id'])
         return {"result": "successful"}
+
+
+
+
+@app.route("/save-recent-date", methods=["POST"])
+def save_recent_date():
+    """Saves the last date a user chose on slider, so that it appears when they next login."""
+
+    user_id = session['user_id']
+    date_before_logout = request.json.get("dateBeforeLogout")
+    
+    recent_date_by_user_id = crud.save_recent_date(user_id, date_before_logout)
+
+    return ""
+
+
+
+
+@app.route('/check-recent-date')
+def check_recent_date_chosen():
+    """Check if there exists a recent date based on user ID."""
+
+    user_id = session['user_id']
+    recent_chosen_date_and_name = crud.check_if_user_has_recent_date(user_id)
+
+    return recent_chosen_date_and_name
 
       
 
@@ -115,9 +150,6 @@ def validate_user():
 def covid_timeline():
     """View timeline from case 1 to present."""
 
-    # total = crud.get_total_num_dates()
-    # print(total)
-    # print(f"# Countries: {len(crud.show_all_countries())}\n\n\n\n")
 
     return render_template("timeline.html")
 

@@ -117,6 +117,37 @@ def check_if_user_in_system(check_email, check_password):
 
 
 
+def save_recent_date(get_id, get_most_recent_date):
+    """Saves the user's last chosen date on slider, so that it's the first date they see upon login."""
+
+    find_user_by_id = User.query.filter_by(user_id=get_id).first()
+    find_user_by_id.recent_date = get_most_recent_date
+    
+    db.session.commit()
+
+    find_user_by_id = User.query.filter_by(user_id=get_id).first()
+
+    print(find_user_by_id)
+    return find_user_by_id
+
+
+
+
+def check_if_user_has_recent_date(given_id):
+    """Uses the user's id to check if they have a value saved under recent_date column."""
+
+    check_if_user_id_exists = User.query.filter_by(user_id=given_id).first()
+    greeting_no_date = (f"Welcome " + check_if_user_id_exists.first_name + "! You have no recent dates.")
+    greeting_with_date = (f"Welcome " + check_if_user_id_exists.first_name + "!" + " Your most recent chosen date is: " + str(check_if_user_id_exists.recent_date))
+
+    if str(check_if_user_id_exists.recent_date) is not None:
+        return greeting_with_date 
+    else:
+        return greeting_no_date
+
+
+
+
 
     ############## Country Statistics Functions ##############
 

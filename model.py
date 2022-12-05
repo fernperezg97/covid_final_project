@@ -58,6 +58,7 @@ class User(db.Model):
     last_name = db.Column(db.String(50))
     email = db.Column(db.String(50))
     password = db.Column(db.String(20))
+    recent_date = db.Column(db.Date)
 
     def __repr__(self):
         "Show info about user."
