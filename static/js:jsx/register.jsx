@@ -10,7 +10,7 @@ function Register() {
         // e.preventDefault();
         // console.log(firstName, lastName, email, password);
 
-        fetch(`/user-registration-check`, {
+        fetch(`/user-registration-check`,{
             'method':'POST',
              headers : {
             'Content-Type':'application/json'
@@ -21,21 +21,12 @@ function Register() {
             .then((responseData) => {
                 console.log(responseData);
                 if (responseData.result === 'unsuccessful') {
-                    swal({
-                        title: "Invalid Credentials!",
-                        text: "User already exists or input is invalid.",
-                        icon: "error",
-                        button: true,
-                        dangerMode: true,
-                      });
+                    alert(responseData.status);
+                    console.log("alert");
                 } else {
-                    swal({title: "New User Created!",
-                        text: "You will be redirected to login with your new credentials.",
-                        icon: "success",
-                        button: "OK"})
-                    .then(() => {
-                        window.location.href = '/login';
-                });
+                    // console.log("login successful");
+                    window.location.href = '/login'
+                    alert(responseData.status);
             }
         });
     }
@@ -44,9 +35,9 @@ function Register() {
         <div className="box-form">
             <div className="left">
                 <div className="overlay">
-                <h1>COVID-19</h1>
-                <h2>Choro-Tracker</h2>
-                <p>Learn about the growth and decline of COVID-19 cases and deaths around the world through an interactive choropleth map.</p>
+                <h1>Hello World.</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur et est sed felis aliquet sollicitudin</p>
                 </div>
             </div>
             <div className="right">

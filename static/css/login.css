@@ -1,5 +1,5 @@
 body {
-    background-image: linear-gradient(135deg, #D62828 10%, #F77F00 100%, #FCBF49 30%);
+    background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -8,7 +8,7 @@ body {
   }
   
   .box-form {
-    margin: 5% auto;
+    margin: 0 auto;
     width: 80%;
     background: #FFFFFF;
     border-radius: 10px;
@@ -34,26 +34,19 @@ body {
     color: #FFFFFF;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("/static/img/map.png");
+    background-image: url("map.png");
     overflow: hidden;
   }
   .box-form .left .overlay {
     padding: 30px;
     width: 100%;
     height: 100%;
-    background: #020303ad;
+    background: #5961f9ad;
     overflow: hidden;
     box-sizing: border-box;
   }
   .box-form .left .overlay h1 {
     font-size: 10vmax;
-    line-height: 1;
-    font-weight: 900;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
-  .box-form .left .overlay h2 {
-    font-size: 6vmax;
     line-height: 1;
     font-weight: 900;
     margin-top: 40px;
@@ -77,7 +70,7 @@ body {
     margin-left: 30px;
   }
   .box-form .right {
-    padding: 35px;
+    padding: 40px;
     overflow: hidden;
   }
   @media (max-width: 980px) {
@@ -93,9 +86,6 @@ body {
     font-size: 14px;
     color: #B0B3B9;
   }
-  a {
-    color:#49C628
-  }
   .box-form .right .inputs {
     overflow: hidden;
   }
@@ -108,16 +98,16 @@ body {
     outline: none;
     border-bottom: 2px solid #B0B3B9;
   }
-  /* .box-form .right .remember-me--forget-password {
+  .box-form .right .remember-me--forget-password {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  } */
-  /* .box-form .right .remember-me--forget-password input {
+  }
+  .box-form .right .remember-me--forget-password input {
     margin: 0;
     margin-right: 7px;
     width: auto;
-  } */
+  }
   .box-form .right button {
     align-items: left;
     color: #fff;

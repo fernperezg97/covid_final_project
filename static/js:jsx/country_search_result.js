@@ -4,13 +4,13 @@
 // console.log("Countries are:", countries);
 
 const countrySearched = sessionStorage.getItem("searchValue");
-// const dateSearched = sessionStorage.getItem("dateAtSearch");
+const dateSearched = sessionStorage.getItem("dateAtSearch");
 
 document.getElementById("country-name").innerHTML = countrySearched;
-// document.getElementById("dateAtSearch").innerHTML = dateSearched;
+document.getElementById("dateAtSearch").innerHTML = dateSearched;
 
 console.log("The value saved was named: ", countrySearched);
-// console.log("The date saved is : ", dateSearched);
+console.log("The date saved is : ", dateSearched);
 
 const queryString = new URLSearchParams({ "country": countrySearched }).toString();
 const url = `/api/get-country-search-stats?${queryString}`;
@@ -77,35 +77,15 @@ fetch(lineGraphUrl)
                 plugins: {
                     title: {
                         display: true,
-                        text: 'COVID-19 Cases and Deaths from March 22, 2020 - Present',
-                        font: {
-                            size: 20
-                        }
+                        text: 'COVID-19 Cases and Deaths from March 22, 2020 - Present'
                   }
                 },
                 scales: {
                     xAxes: {
+                        // type: 'time',
                         ticks: {
+                            // autoSkip: true,
                             maxTicksLimit: 10,
-                        },
-                        title: {
-                            display: true,
-                            text: 'Date',
-                            font: {
-                                size: 15
-                            }
-                        }
-                    },
-                    yAxes: {
-                        ticks: {
-                            maxTicksLimit: 10,
-                        },
-                        title: {
-                            display: true,
-                            text: 'Total',
-                            font: {
-                                size: 15
-                            }
                         }
                     }
                 },

@@ -22,10 +22,10 @@ function Login() {
                 console.log(responseData);
                 if (responseData.result === 'unsuccessful') {
                     alert(responseData.status);
-                    // console.log("alert");
+                    console.log("alert");
                     ReactDOM.render(<Login/>, document.querySelector('#root'));
                 } else {
-                    // console.log("login successful");
+                    console.log("login successful");
                     window.location.href = '/covid-timeline'
                 }
         });
@@ -35,9 +35,9 @@ function Login() {
         <div className="box-form">
             <div className="left">
                 <div className="overlay">
-                    <h1>COVID-19</h1>
-                    <h2>Choro-Tracker</h2>
-                    <p>Learn about the growth and decline of COVID-19 cases and deaths around the world through an interactive choropleth map.</p>
+                    <h1>Hello World.</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Curabitur et est sed felis aliquet sollicitudin</p>
                 </div>
             </div>
             <div className="right">
@@ -49,7 +49,14 @@ function Login() {
                     <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" />
                 </div>
                 <br /><br />
-               
+                <div className="remember-me--forget-password">
+                    {/* Angular */}
+                <label>
+                    <input type="checkbox" name="item" defaultChecked />
+                    <span className="text-checkbox">Remember me</span>
+                </label>
+                <p>forget password?</p>
+                </div>
                 <br />
                 {/* <button onClick={() => props.onFormSwitch('register')}>Login</button> */}
                 <button type="submit" onClick={submitUserLoginInfo}>Login</button>

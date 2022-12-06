@@ -38,7 +38,6 @@ def login_homepage():
 
 
 
-
 @app.route("/login")
 def login():
     """View login page."""
@@ -63,22 +62,17 @@ def registration_duplicates_check():
 
     email = request.json['email']
     password = request.json['password']
+    firstName = request.json['firstName']
+    lastName = request.json['lastName']
 
     user_exists = crud.check_if_user_in_system(email, password)
 
-    if user_exists is None:
-        firstName = request.json['firstName']
-        lastName = request.json['lastName']
-        email = request.json['email']
-        password = request.json['password']
-
+    if user_exists is None and not '' in [firstName, lastName, email, password]:
         crud.create_user_instance(firstName, lastName, email, password)
-        # print("I got here.")
     
         return {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}
     else:
-
-        return {"result": "unsuccessful", "status": "USER ALREADY EXISTS. PLEASE LOGIN OR CREATE NEW ACCOUNT."}
+        return {"result": "unsuccessful", "status": "USER ALREADY EXISTS OR CREDENTIALS INVALID."}
 
 
 

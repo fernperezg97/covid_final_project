@@ -137,12 +137,7 @@ input[type=submit] {
 }
 
 .logout {
- display: flex;
- justify-content: end;
-}
-
-#logout {
-  margin-right: 25%;
+ display: inline-block;
 }
   
   
