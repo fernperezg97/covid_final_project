@@ -6,7 +6,7 @@ import requests
 import crud
 # import jinga2
 import os
-from updated_keys import new_keys
+from updated_keys import new_keys, swapped_new_keys
 from jinja2 import StrictUndefined
 from model import connect_to_db, db
 
@@ -60,10 +60,15 @@ def register():
 def registration_duplicates_check():
     """Check if user exists in database."""
 
+
+
     email = request.json['email']
     password = request.json['password']
     firstName = request.json['firstName']
     lastName = request.json['lastName']
+
+    print(email, password)
+
 
     user_exists = crud.check_if_user_in_system(email, password)
 
@@ -77,18 +82,18 @@ def registration_duplicates_check():
 
 
 
-@app.route("/user-registration-info", methods=["POST"])
-def user_info_to_database():
-    """Send user input to database."""
+# @app.route("/user-registration-info", methods=["POST"])
+# def user_info_to_database():
+#     """Send user input to database."""
 
-    firstName = request.json['firstName']
-    lastName = request.json['lastName']
-    email = request.json['email']
-    password = request.json['password']
+#     firstName = request.json['firstName']
+#     lastName = request.json['lastName']
+#     email = request.json['email']
+#     password = request.json['password']
 
-    crud.create_user_instance(firstName, lastName, email, password)
-    # print("I got here.")
-    return render_template("login.html")
+#     crud.create_user_instance(firstName, lastName, email, password)
+#     # print("I got here.")
+#     return render_template("login.html")
 
 
 
@@ -164,7 +169,14 @@ def country_search_stats():
     """Return the statistics of a particular country when searched."""
 
     country_search_name = request.args.get("country") # grabs user country search input
-    country_search_stats = crud.stats_per_country(country_search_name)
+    print(f"Country Received: {country_search_name}\nCountry in dict: ({swapped_new_keys.get(country_search_name)})")
+
+    if swapped_new_keys.get(country_search_name) is not None:
+        country_search_stats = crud.stats_per_country(swapped_new_keys[country_search_name])
+    else:
+        country_search_stats = crud.stats_per_country(country_search_name)
+
+    print(f"Michael is so awezome\n\n{country_search_stats}\n\n")
 
     return jsonify(country_search_stats)
 
@@ -181,7 +193,13 @@ def line_graph_stats():
     dict_for_line_graph = {}
 
     line_graph_country_name = request.args.get("country") # uses user country search input to update line graph cases and deaths
-    line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(line_graph_country_name) # query returns list of tuples (country, datetime, cases, deaths)
+    
+    if swapped_new_keys.get(line_graph_country_name) is not None:
+        line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(swapped_new_keys[line_graph_country_name])
+    else:
+        line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(line_graph_country_name)
+        
+    # line_graph_cases_deaths_by_country = crud.cases_and_deaths_for_chosen_country(line_graph_country_name) # query returns list of tuples (country, datetime, cases, deaths)
     line_graph_cases_deaths_by_country.reverse()
 
     for tup in line_graph_cases_deaths_by_country:

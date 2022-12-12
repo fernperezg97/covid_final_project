@@ -336,3 +336,19 @@ function userRecentDate() {
     return;
   });
 }
+
+// navbar sticky function
+
+window.onscroll = function() {myFunction()};
+
+const navbar = document.querySelector(".header");
+
+const sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}

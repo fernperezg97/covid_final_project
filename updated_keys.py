@@ -54,3 +54,4 @@ new_keys = {
 "USA": "United States of America"
 }
 
+swapped_new_keys = dict((value,key) for key,value in new_keys.items())

@@ -4,25 +4,47 @@
 
 {% block head %}
   <link rel="stylesheet" href="/static/world_map.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block body %}
-  <h1>COVID-19 Timeline</h1>
-  <h2>
-    <div>
-      <form autocomplete="off" id="search-by-country" >
-        <div class="autocomplete">
-          <input type="text" name="message" id="country-search-bar" placeholder="Search by country" onKeyUp="showResults(this.value)"/>
-          <input type="submit" id="search-bar-submit" />
-          <div id="result"></div>
-        </div>
-      </form>
-    </div>
 
-    <div class="logout">
-      <button id="logout-button" type="button">Log Out</button>
-    </div>
-  </h2>
+<header class="header">
+  <div>
+    <h1 class="logo"><a href="#">COVID-19 Choro-Tracker</a></h1>
+    <button class="logout" id="logout-button" type="button">Log Out</button>
+  </div>
+  
+    <ul class="main-nav">
+        <!-- <li><a href="#">Home</a></li> -->
+        <!-- <li><a href="#">About</a></li> -->
+        <!-- <li><a href="#">Portfolio</a></li> -->
+        <!-- <li><a href="#">Contact</a></li> -->
+        <li>
+          <div id="welcome-back">
+            <p> </p>
+          </div>
+        </li>
+        <!-- <li>
+          
+        </li> -->
+        <li>
+          <div>
+            <form autocomplete="off" id="search-by-country" >
+              <div class="autocomplete">
+                <input type="text" name="message" id="country-search-bar" placeholder="Search by country" onKeyUp="showResults(this.value)"/>
+                <button type="submit" id="search-bar-submit"><i class="fa fa-search"></i></button>
+                <div id="result"></div>
+              </div>
+            </form>
+          </div>
+        </li>
+        
+    </ul>
+</header> 
+
+  <h1>Global COVID-19 Timeline March 3, 2020 - Present</h1>
+  <p><i>Hover over each country to see either total cases or total deaths controlled by dropdown.</i></p>
 
   <div class="chartCard">
     <div class="chartBox">
@@ -32,25 +54,27 @@
 
   <div class="slidecontainer"> <!--Slider that allows user to go through dates.-->
     <input type="range" min="1" max="100" value="1" class="slider" id="myRange">
-    <p>
-      Date: <span id="date"></span>
-    </p>
   </div>
 
-  <div class="dropdown">
-    <form>
-      <select id = "myList" onchange = "dropdownOptions()" >
-      <option> Cases</option>
-      <option> Deaths </option>
-      </select>
-    </form>
-  </div>  
-
-  <div id="welcome-back">
-    <p>
-      
-    </p>
+  <div class="slider-date-and-dropdown">
+    <div class="dropdown">
+      <form>
+        <select class="cases-and-deaths-dropdown" id="myList" onchange = "dropdownOptions()" >
+          <option> Cases</option>
+          <option> Deaths </option>
+        </select>
+      </form>
+    </div>
+    
+    <div class="date-for-slider">
+      <p>
+        Date: <span id="date"></span>
+      </p>
+    </div>
   </div>
+
+  <br>
+  <br>
 
   <script src="https://unpkg.com/chart.js@3"></script>
   <script src="https://unpkg.com/chartjs-chart-geo@3"></script>

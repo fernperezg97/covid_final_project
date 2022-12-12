@@ -62,14 +62,14 @@ fetch(lineGraphUrl)
                 label: 'Cases',
                 data: casesAndDeathsData["cases"],
                 fill: false,
-                borderColor: 'rgb(0, 0, 255)',
+                borderColor: '#ffb703',
                 tension: 0.1 
               }, 
                 {
                 label: 'Deaths',
                 data: casesAndDeathsData["deaths"],
                 fill: false,
-                borderColor: 'rgb(255, 0, 0)',
+                borderColor: '#dc2f02',
                 tension: 0.1 
                 }]
             },
@@ -111,4 +111,36 @@ fetch(lineGraphUrl)
                 },
             }
         });
-})
+});
+
+// home functionality for country-results page
+
+const homeOnNav = document.querySelector(".main-nav");
+
+homeOnNav.addEventListener("click", () => {
+    window.location.href = "covid-timeline";
+    return;
+});
+
+const logoOnNav = document.querySelector(".header");
+
+logoOnNav.addEventListener("click", () => {
+    window.location.href = "covid-timeline";
+    return;
+});
+
+// navbar sticky function
+
+window.onscroll = function() {myFunction()};
+
+const navbar = document.querySelector(".header");
+
+const sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}

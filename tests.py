@@ -1,4 +1,7 @@
 import crud
+import unittest
+import server
+import json
 
 class MyWebsiteTests(unittest.TestCase):
     """Testing Flask server"""
@@ -28,30 +31,34 @@ class MyWebsiteTests(unittest.TestCase):
     def test_if_user_created(self):
         """Checks if user added to database after entering all required credentials."""
 
-        user_instance = create_user_instance("test0", "test1", "test2", "test3")
+        user_instance = crud.create_user_instance("test0", "test1", "test2", "test3")
         
         self.assertTrue(user_instance.first_name == "test0")
         self.assertTrue(user_instance.last_name == "test1")
         self.assertTrue(user_instance.email == "test2")
         self.assertTrue(user_instance.password == "test3")
 
-
+# Michael
+    #    result = client.post('/user-registration-check', 
+    #                          data=json.dumps(dict(email= 'janedoe@gmail.com',password= 'password1', firstName='Jane', lastName='Doe')),
+    #                          content_type="application/json")
 
     def test_user_validation(self):
         """Check the route that validates a user. Provide a pretend email/password and check the return is a dictionary with an unsuccessful status"""
 
         client = server.app.test_client()
-        result = client.post('/user-registration-check', data={'email': 'test@gmail.com',
-                                                                'password': 'test1234'})
+        result = client.post('/user-registration-check', 
+                             data=json.dumps(dict(email= 'test@gmail.com', password= 'test1234', firstName="bad", lastName="guy")),
+                             content_type='application/json')
 
-        assertTrue(return == {"result": "unsuccessful", "status": "USER ALREADY EXISTS OR CREDENTIALS INVALID."})
+        self.assertEqual(result, {"result": "unsuccessful", "status": "USER ALREADY EXISTS OR CREDENTIALS INVALID."})
 
 
 
-    def test_user_taken_to_timeline():
+    def test_user_taken_to_timeline(self):
         """ Tests that user is taken to COVID timeline page after receiving dictionary response with 'result': 'sucessful' """
 
         client = server.app.test_client()
         result = client.post('/user-registration-check')
 
-        assertTrue(return == {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}) 
+        self.assertTrue(result == {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}) 

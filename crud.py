@@ -137,10 +137,12 @@ def check_if_user_has_recent_date(given_id):
     """Uses the user's id to check if they have a value saved under recent_date column."""
 
     check_if_user_id_exists = User.query.filter_by(user_id=given_id).first()
-    greeting_no_date = (f"Welcome " + check_if_user_id_exists.first_name + "! You have no recent dates.")
-    greeting_with_date = (f"Welcome " + check_if_user_id_exists.first_name + "!" + " Your most recent chosen date is: " + str(check_if_user_id_exists.recent_date))
+    greeting_no_date = (f"Welcome, " + check_if_user_id_exists.first_name + "! You have no recent chosen dates.")
+    greeting_with_date = (f"Welcome, " + check_if_user_id_exists.first_name + "!" + " Your most recent chosen date is: " + str(check_if_user_id_exists.recent_date))
 
-    if str(check_if_user_id_exists.recent_date) is not None:
+    print(str(check_if_user_id_exists.recent_date) == 'None')
+
+    if str(check_if_user_id_exists.recent_date) != 'None':
         return greeting_with_date 
     else:
         return greeting_no_date
