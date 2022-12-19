@@ -82,21 +82,6 @@ def registration_duplicates_check():
 
 
 
-# @app.route("/user-registration-info", methods=["POST"])
-# def user_info_to_database():
-#     """Send user input to database."""
-
-#     firstName = request.json['firstName']
-#     lastName = request.json['lastName']
-#     email = request.json['email']
-#     password = request.json['password']
-
-#     crud.create_user_instance(firstName, lastName, email, password)
-#     # print("I got here.")
-#     return render_template("login.html")
-
-
-
 
 @app.route("/user-login-info", methods=["POST"])
 def validate_user():
@@ -175,8 +160,6 @@ def country_search_stats():
         country_search_stats = crud.stats_per_country(swapped_new_keys[country_search_name])
     else:
         country_search_stats = crud.stats_per_country(country_search_name)
-
-    print(f"Michael is so awezome\n\n{country_search_stats}\n\n")
 
     return jsonify(country_search_stats)
 

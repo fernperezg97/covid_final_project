@@ -13,6 +13,26 @@ class MyWebsiteTests(unittest.TestCase):
         result = client.get('/country-search')
 
         self.assertIn(b'Population', result.data)
+
+
+
+    def test_timeline_shown(self):
+        """Tests that timeline map page is displayed."""
+
+        client = server.app.test_client()
+        result = client.get('/covid-timeline')
+
+        self.assertIn(b'Global COVID-19 Timeline', result.data)
+
+
+
+    def test_registration_page_shown(self):
+        """Tests that registration page is displayed."""
+
+        client = server.app.test_client()
+        result = client.get('/register')
+
+        self.assertIn(b'Already have an account?', result.data)
         
 
 
@@ -24,13 +44,15 @@ class MyWebsiteTests(unittest.TestCase):
                                                             'last_name': 'Doe',
                                                             'email': 'janedoe@gmail.com',
                                                             'password': 'password1'})
-        self.assertIn(b'Create Your Account')
+        self.assertIn(b'Create Your Account', result.data)
 
 
         
     def test_if_user_created(self):
         """Checks if user added to database after entering all required credentials."""
 
+        client = server.app.test_client()
+        result = client.get('/user-registration-check')
         user_instance = crud.create_user_instance("test0", "test1", "test2", "test3")
         
         self.assertTrue(user_instance.first_name == "test0")
@@ -61,4 +83,4 @@ class MyWebsiteTests(unittest.TestCase):
         client = server.app.test_client()
         result = client.post('/user-registration-check')
 
-        self.assertTrue(result == {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}) 
+        self.assertTrue(result, {"result": "sucessful", "status": "LOGIN WITH YOUR NEW CREDENTIALS."}) 
