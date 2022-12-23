@@ -26,54 +26,54 @@ class MyWebsiteTests(unittest.TestCase):
 
 
 
-    def test_registration_page_shown(self):
-        """Tests that registration page is displayed."""
+    # def test_registration_page_shown(self):
+    #     """Tests that registration page is displayed."""
 
-        client = server.app.test_client()
-        result = client.get('/register')
+    #     client = server.app.test_client()
+    #     result = client.get('/register')
 
-        self.assertIn(b'Already have an account?', result.data)
+    #     self.assertIn(b'Already have an account?', result.data)
         
 
 
-    def test_user_registration(self):
-        """POST request test."""
+    # def test_user_registration(self):
+    #     """POST request test."""
 
-        client = server.app.test_client()
-        result = client.post('/user-registration-info', data={'first_name': 'Jane',
-                                                            'last_name': 'Doe',
-                                                            'email': 'janedoe@gmail.com',
-                                                            'password': 'password1'})
-        self.assertIn(b'Create Your Account', result.data)
+    #     client = server.app.test_client()
+    #     result = client.post('/user-registration-info', data={'first_name': 'Jane',
+    #                                                         'last_name': 'Doe',
+    #                                                         'email': 'janedoe@gmail.com',
+    #                                                         'password': 'password1'})
+    #     self.assertIn(b'Create Your Account', result.data)
 
 
         
-    def test_if_user_created(self):
-        """Checks if user added to database after entering all required credentials."""
+    # def test_if_user_created(self):
+    #     """Checks if user added to database after entering all required credentials."""
 
-        client = server.app.test_client()
-        result = client.get('/user-registration-check')
-        user_instance = crud.create_user_instance("test0", "test1", "test2", "test3")
+    #     client = server.app.test_client()
+    #     result = client.get('/user-registration-check')
+    #     user_instance = crud.create_user_instance("test0", "test1", "test2", "test3")
         
-        self.assertTrue(user_instance.first_name == "test0")
-        self.assertTrue(user_instance.last_name == "test1")
-        self.assertTrue(user_instance.email == "test2")
-        self.assertTrue(user_instance.password == "test3")
+    #     self.assertTrue(user_instance.first_name == "test0")
+    #     self.assertTrue(user_instance.last_name == "test1")
+    #     self.assertTrue(user_instance.email == "test2")
+    #     self.assertTrue(user_instance.password == "test3")
 
 # Michael
     #    result = client.post('/user-registration-check', 
     #                          data=json.dumps(dict(email= 'janedoe@gmail.com',password= 'password1', firstName='Jane', lastName='Doe')),
     #                          content_type="application/json")
 
-    def test_user_validation(self):
-        """Check the route that validates a user. Provide a pretend email/password and check the return is a dictionary with an unsuccessful status"""
+    # def test_user_validation(self):
+    #     """Check the route that validates a user. Provide a pretend email/password and check the return is a dictionary with an unsuccessful status"""
 
-        client = server.app.test_client()
-        result = client.post('/user-registration-check', 
-                             data=json.dumps(dict(email= 'test@gmail.com', password= 'test1234', firstName="bad", lastName="guy")),
-                             content_type='application/json')
+    #     client = server.app.test_client()
+    #     result = client.post('/user-registration-check', 
+    #                          data=json.dumps(dict(email= 'test@gmail.com', password= 'test1234', firstName="bad", lastName="guy")),
+    #                          content_type='application/json')
 
-        self.assertEqual(result, {"result": "unsuccessful", "status": "USER ALREADY EXISTS OR CREDENTIALS INVALID."})
+    #     self.assertEqual(result, {"result": "unsuccessful", "status": "USER ALREADY EXISTS OR CREDENTIALS INVALID."})
 
 
 
