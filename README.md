@@ -3,5 +3,5 @@
 Choro-Tracker allows a user to interact with a global COVID-19 dataset through use of a Chart.js choropleth map and line graph.
 ## Technologies Used
 Python | Javascript | React | AJAX | Flask | SQL | HTML | CSS | Bootstrap
-## Youtube Video Project Presentation
+## YouTube Video Project Presentation
 https://youtu.be/jiTDTXMDScg
