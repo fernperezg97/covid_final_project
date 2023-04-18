@@ -4,4 +4,4 @@ Choro-Tracker allows a user to interact with a global COVID-19 dataset through u
 ## Technologies Used
 Python | Javascript | React | AJAX | Flask | SQL | HTML | CSS | Bootstrap
 ## YouTube Video Project Presentation
-[Check out a rundown of my project on YouTube!](https://www.youtube.com/watch?v=H0DfmBLnnho&ab_channel=FernandaP%C3%A9rezGuti%C3%A9rrez)
+[Watch an explanation of my project on YouTube!](https://www.youtube.com/watch?v=H0DfmBLnnho&ab_channel=FernandaP%C3%A9rezGuti%C3%A9rrez)
