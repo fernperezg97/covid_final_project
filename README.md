@@ -14,7 +14,7 @@ The Sweet Alert package was used to create beauiful, responsive, customizable, a
 ### Map Navigation
 Once the user has logged in, the first thing they are presented with is a global COVID-19 map. The map was created using the Chart.js library where I chose to use a choropleth map to diplay total cases and total deaths. A choropleth map was most suitable given its ability to clearly display an aggregate summary (e.g. total cases, total deaths, population, etc.) of a geographic characteristic.
 
-Choro-Tracker allows a user to interact with the map through a slider where they can choose the date and hover over each country to view its data. The slider itself uses javascript to detect a change triggered by the user. In order for the correct data to appear on the map, I query the user’s chosen date on my local database with SQLAlchemy and fetch the cases and deaths data for every country on the map. 
+Choro-Tracker allows a user to interact with the map through a slider where they can choose the date and hover over each country to view its data. The slider itself uses javascript to detect a change triggered by the user. In order for the correct data to appear on the map, the user’s chosen date is queried on a local database with SQLAlchemy. Cases and deaths data is then fetched for every country on the map. 
 
 ![](covid_project_map_navigation.gif)
 
