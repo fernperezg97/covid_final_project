@@ -37,7 +37,7 @@ This is a single-page app built primarily with:
 
 * SQLAlchemy
 * Chart.js (open-source JavaScript library for data visualization)
-* Jinja - Jinja was used to return a single HTML page to the frontend
+* Jinja (used to create HTML, XML or other markup formats that are returned to the user via an HTTP request)
 * Bootstrap
 
 ### APIs
