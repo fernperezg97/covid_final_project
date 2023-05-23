@@ -7,7 +7,7 @@ Choro-Tracker allows a user to interact with a global COVID-19 API dataset throu
 ### Registration and Login
 The app opens on the login page where the user can either login with an existing email and password or register a new account. If registering, the user can  input their first name, last name, email, and password, and are then redirected to the login page where they can input their newly created credentials.
 
-The Sweet Alert package was used to create beauiful, responsive, customizable, and accessible popup boxes for displaying alerts.
+The Sweet Alert package was used to create beautiful, responsive, customizable, and accessible popup boxes for displaying alerts.
 
 ![](covid_project_register_login.gif)
 
